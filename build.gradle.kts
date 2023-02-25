@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform") version "1.8.10"
-    id("com.android.library")
+    id("maven-publish")
+    id("com.android.library") version "7.0.4"
 }
 
 group = "dev.usbharu"
@@ -20,19 +21,18 @@ kotlin {
     }
     js(BOTH) {
         browser {
-            commonWebpackConfig {
-                cssSupport {
-                    enabled.set(true)
-                }
-            }
+
         }
-    }
-    js("node", IR) {
-        binaries.executable()
         nodejs {
 
         }
     }
+//    js("node", IR) {
+//        binaries.executable()
+//        nodejs {
+//
+//        }
+//    }
     android()
     sourceSets {
         val commonMain by getting
@@ -49,8 +49,8 @@ kotlin {
         val jvmTest by getting
         val jsMain by getting
         val jsTest by getting
-        val nodeMain by getting
-        val nodeTest by getting
+//        val nodeMain by getting
+//        val nodeTest by getting
         val androidMain by getting
         val androidTest by getting {
             dependencies {
@@ -59,6 +59,11 @@ kotlin {
         }
     }
 }
+
+
+//buildscript {
+    ext["kotlin_version"] = "1.8.10"
+//}
 
 android {
     compileSdkVersion(31)
@@ -73,5 +78,18 @@ android {
     }
 }
 dependencies {
-    implementation("androidx.core:core-ktx:+")
+//    implementation("androidx.core:core-ktx:+")
+}
+
+publishing{
+    repositories{
+        maven{
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/usbharu/multim")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
 }
