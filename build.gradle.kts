@@ -33,7 +33,9 @@ kotlin {
 //
 //        }
 //    }
-    android()
+    android {
+        publishLibraryVariants("release", "debug")
+    }
     sourceSets {
         val commonMain by getting
         val commonTest by getting {
@@ -85,7 +87,7 @@ publishing{
     repositories{
         maven{
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/usbharu/multim")
+            url = uri("https://maven.pkg.github.com/usbharu/kmp-logger")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
