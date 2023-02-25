@@ -1,17 +1,39 @@
 package dev.usbharu.logger
 
-import kotlin.jvm.JvmOverloads
+abstract class Logger(private val tag: String) {
+    fun error(message: String?, throwable: Throwable? = null) {
+        log(Level.ERROR, tag, message, throwable)
+    }
 
-expect abstract class Logger{
+    fun warn(message: String?, throwable: Throwable? = null) {
+        log(Level.WARN, tag, message, throwable)
+    }
 
-    @JvmOverloads
-    fun error(message: String?, throwable: Throwable? = null)
-    @JvmOverloads
-    fun warn(message: String?, throwable: Throwable? = null)
-    @JvmOverloads
-    fun info(message: String?, throwable: Throwable? = null)
-    @JvmOverloads
-    fun debug(message: String?, throwable: Throwable? = null)
-    @JvmOverloads
-    fun trace(message: String?, throwable: Throwable? = null)
+    fun info(message: String?, throwable: Throwable? = null) {
+        log(Level.INFO, tag, message, throwable)
+    }
+
+    fun debug(message: String?, throwable: Throwable? = null) {
+        log(Level.DEBUG, tag, message, throwable)
+    }
+
+    fun trace(message: String?, throwable: Throwable? = null) {
+        log(Level.TRACE, tag, message, throwable)
+    }
+
+    protected abstract fun log(
+        level: Level,
+        tag: String,
+        message: String?,
+        throwable: Throwable? = null
+    )
+
+
+    protected enum class Level {
+        TRACE,
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR
+    }
 }
