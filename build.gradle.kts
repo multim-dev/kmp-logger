@@ -87,7 +87,7 @@ publishing{
     repositories{
         maven{
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/usbharu/kmp-logger")
+            url = uri("https://maven.pkg.github.com/multim-dev/kmp-logger")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
